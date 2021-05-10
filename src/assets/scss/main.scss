@@ -1,0 +1,271 @@
+$blue: #224388 !default;
+$light-yellow: #ffefbe;
+.secondary-navbar .active {
+  @media (min-width: 768px) {
+    color: $blue !important;
+  }
+}
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  background-color: $gray-200;
+}
+
+.main-header {
+  padding-top: 10px;
+  @media (min-width: 768px) {
+    padding-bottom: 30px;
+  }
+}
+
+.main-navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.secondary-header {
+  height: 0px;
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+
+  .secondary-navbar {
+    background-color: $white;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.05);
+    margin-top: 15px !important;
+  }
+}
+
+.main-content {
+  margin-top: 20px;
+  padding: 0px;
+  @media (min-width: 768px) {
+    margin-top: 40px;
+    padding: 20px;
+  }
+}
+
+.breadcrumb ol {
+  margin: 0px;
+  padding: 0px;
+  padding-top: 2px;
+}
+
+.table {
+  border: 1px solid #dee2e6;
+  white-space: nowrap;
+  @media (min-width: 768px) {
+    white-space: normal;
+  }
+}
+
+.footer {
+  padding: 15px 0px 15px 0px;
+}
+
+.m0 {
+  margin: 0px;
+}
+
+.p0 {
+  padding: 0px;
+}
+
+.p3 {
+  padding: 15px;
+}
+
+.w5 {
+  width: 5%;
+}
+
+.w10 {
+  width: 10%;
+}
+
+.w12 {
+  width: 12%;
+}
+
+.w15 {
+  width: 15%;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.hide-caret a::after {
+  display: none;
+}
+
+.icon {
+  font-size: 20px;
+  margin-top: -2px;
+}
+
+.photo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.logo {
+  height: 45px;
+  @media (min-width: 768px) {
+    height: 50px;
+  }
+}
+
+.panel {
+  border-radius: 5px;
+  background-color: $white;
+  margin-top: 20px;
+  padding: 15px;
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.05);
+  @media (min-width: 768px) {
+    padding: 30px;
+  }
+}
+
+.divider {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-top: 1px solid #dee2e6;
+}
+
+.background {
+  background-color: $blue;
+  background-image: linear-gradient(to bottom, $blue, #102144);
+}
+
+.fs-13 {
+  font-size: 13px;
+}
+
+.notification-select .dropdown-menu,
+.language-select .dropdown-menu {
+  position: absolute;
+  @media (min-width: 768px) {
+    position: relative;
+  }
+}
+
+.notification-select .dropdown-menu .active,
+.language-select .dropdown-menu .active {
+  background-color: transparent !important;
+  color: #212529 !important;
+}
+
+.notification-content {
+  @media (min-width: 768px) {
+    width: 250px;
+    word-wrap: break-word;
+  }
+}
+
+.text-gray {
+  color: $gray-600;
+}
+
+.notification-message {
+  background-color: $white;
+  min-width: 100%;
+  box-shadow: 1px 5px 3px 1px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  font-size: 14px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border-top: 2px solid $white;
+  @media (min-width: 768px) {
+    min-width: 350px;
+    margin-top: 20px;
+    margin-right: calc(50% - 175px);
+  }
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.notification-push {
+  color: $dark;
+  background-color: $light-yellow;
+  min-width: 100%;
+  box-shadow: 1px 5px 3px 1px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  font-size: 14px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  @media (min-width: 768px) {
+    min-width: 350px;
+    margin-bottom: 70px;
+    margin-right: 20px;
+  }
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.border-color-info {
+  border-top: 2px solid $info;
+}
+
+.border-color-danger {
+  border-top: 2px solid $danger;
+}
+
+.border-color-warning {
+  border-top: 2px solid $warning;
+}
+
+.alert-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.alert-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.alert-exit {
+  opacity: 1;
+}
+
+.alert-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.notification-number {
+  right: -8px;
+  top: -4px;
+  color: $white;
+  background-color: $danger;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  font-size: 11px;
+  padding-top: 2px;
+  @media (min-width: 768px) {
+    right: -2px;
+    top: -2px;
+  }
+}
+
+.pl6 {
+  padding-left: 6px;
+}
+
+.pl3 {
+  padding-left: 3px;
+}
