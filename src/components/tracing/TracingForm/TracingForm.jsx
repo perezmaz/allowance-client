@@ -98,9 +98,13 @@ const TracingForm = props => {
   }, []);
 
   useEffect(() => {
-    if (date !== '') {
+    if ((date !== '') && (child !== '')) {
+      const request = {
+        date,
+        child,
+      };
       let newAmount = 0;
-      findAmount({ date })
+      findAmount(request)
         .then(response => {
           if (response.code === 0) {
             newAmount = response.result.amount;
@@ -115,7 +119,7 @@ const TracingForm = props => {
           setBaseAmount(newAmount);
         });
     }
-  }, [date]);
+  }, [date, child]);
 
   useEffect(() => {
     const request = {
@@ -169,6 +173,8 @@ const TracingForm = props => {
 
   const saveRecord = async event => {
     event.preventDefault();
+    event.target.setAttribute('disabled', 'disabled');
+
     if (validateActivities()) {
       const recordDate = inputs.find(aux => aux.name === 'date').value;
       const request = {
@@ -189,6 +195,7 @@ const TracingForm = props => {
 
       let type = 'info';
       if (response.code !== 0) {
+        event.target.removeAttribute('disabled');
         type = 'danger';
       } else {
         history.goBack();

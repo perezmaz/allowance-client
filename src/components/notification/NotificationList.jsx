@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import useNotification from '../../hooks/useNotification';
 import useWebSocket from '../../hooks/useWebSocket';
 import MainTable from '../MainTable';
+import MainList from '../MainList';
 
 const NotificationList = props => {
   const { t } = useTranslation();
@@ -63,15 +64,30 @@ const NotificationList = props => {
   };
 
   return (
-    <MainTable
-      newItem={table.newItem}
-      tableHead={table.tableHead}
-      tableData={table.tableData}
-      tablePages={table.tablePages}
-      tableColumns={table.tableColumns}
-      actions={table.actions}
-      {...props}
-    />
+    <>
+      <div className="d-sm-none">
+        <MainList
+          newItem={table.newItem}
+          tableHead={table.tableHead}
+          tableData={table.tableData}
+          tablePages={table.tablePages}
+          tableColumns={table.tableColumns}
+          actions={table.actions}
+          {...props}
+        />
+      </div>
+      <div className="d-none d-sm-block">
+        <MainTable
+          newItem={table.newItem}
+          tableHead={table.tableHead}
+          tableData={table.tableData}
+          tablePages={table.tablePages}
+          tableColumns={table.tableColumns}
+          actions={table.actions}
+          {...props}
+        />
+      </div>
+    </>
   );
 };
 

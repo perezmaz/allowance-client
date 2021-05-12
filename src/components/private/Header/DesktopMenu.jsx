@@ -14,11 +14,12 @@ import { useTranslation } from 'react-i18next';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import routes from '../../../config/routes';
 import Logo from '../../../assets/img/log_3.svg';
-import UserPhoto from '../../../assets/img/user.jpg';
+import UserPhoto from '../../../assets/img/user.png';
 import useLanguage from '../../../hooks/useLanguage';
 import useWebSocket from '../../../hooks/useWebSocket';
 import useNotification from '../../../hooks/useNotification';
 import useAuth from '../../../hooks/useAuth';
+import api from '../../../config/api';
 
 const DesktopMenu = ({ languageTitle, logoutUser }) => {
   const { onChangeLanguage } = useLanguage();
@@ -40,11 +41,11 @@ const DesktopMenu = ({ languageTitle, logoutUser }) => {
   const profileTile = (
     <>
       <img
-        src={UserPhoto}
+        src={user.avatar ? `${api.HOST}:${api.PORT}/avatar/${user.avatar}` : UserPhoto}
         alt="Usuario"
         className="photo mr-2"
       />
-      {user.name}
+      {user.name === 'No Name' ? t('No Name') : user.name}
     </>
   );
 

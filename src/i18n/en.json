@@ -58,12 +58,14 @@
     "allowance.list.column1": "Amount $",
     "allowance.list.column2": "From",
     "allowance.list.column3": "To",
+    "allowance.list.column4": "Child",
     "allowance.form.title": "New Allowance",
     "allowance.form.title.edit": "Edit Allowance",
     "allowance.form.info": "Required fields",
     "allowance.form.control1": "Amount $",
     "allowance.form.control2": "From",
     "allowance.form.control3": "To",
+    "allowance.form.control4": "Child",
     "allowance.message.0": "Record saved successfully",    
     "allowance.message.-1": "Ops, we have comunications problems, try again later",
     "allowance.message.-99": "Information not valid, please check your data",
@@ -120,7 +122,7 @@
     "register.form.control4": "Confirm Password",
     "register.form.old": "Already have an account?",
     "register.form.login": "Login",    
-    "register.message.0": "Account created successfully",    
+    "register.message.0": "We send you an email to activate your account",    
     "register.message.-1": "Ops, we have comunications problems, try again later",
     "register.message.-2": "The username was already taken, please use another",
     "register.message.-3": "The email was already taken, please use another",    
@@ -131,7 +133,7 @@
     "forgot.form.control1": "Email",
     "forgot.form.remember": "Remember It?",
     "forgot.form.login": "Login",     
-    "forgot.message.0": "We sent you an email with your new password, please check it",    
+    "forgot.message.0": "We sent you an email with your new password",    
     "forgot.message.-1": "Ops, we have comunications problems, try again later",    
     "forgot.message.-2": "User not found",   
 
@@ -219,7 +221,7 @@
     "date.format": "YYYY-MM-DD",
     "date.partialFormat": "YYYY-MM",
     "date.locale": "en",
-    "date.years": "years",
+    "date.years": "years old",
 
     "date.seconds.ago": "{{seconds}} second(s) ago",
     "date.minutes.ago": "{{minutes}} minute(s) ago",
@@ -227,5 +229,9 @@
     "date.days.ago": "{{days}} day(s) ago",    
 
     "no.records": "No records found",
-    "total": "Total"
+    "No Name": "No Name",
+    "total": "Total",
+
+    "welcome": "Welcome {{name}}",
+    "welcome.message": "Here, you can change your information"
 }

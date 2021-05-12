@@ -213,6 +213,7 @@ const ActivityForm = props => {
 
   const saveRecord = async event => {
     event.preventDefault();
+    event.target.setAttribute('disabled', 'disabled');
 
     const currentPercent = inputs.find(aux => aux.name === 'percent').value;
 
@@ -235,6 +236,7 @@ const ActivityForm = props => {
 
       let type = 'info';
       if (response.code !== 0) {
+        event.target.removeAttribute('disabled');
         type = 'danger';
       } else {
         history.goBack();

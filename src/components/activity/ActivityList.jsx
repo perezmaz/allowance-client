@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainTable from '../MainTable';
+import MainList from '../MainList';
 import useMessage from '../../hooks/useMessage';
 import useModal from '../../hooks/useModal';
 import { list, remove } from '../../api/activity';
@@ -131,15 +132,30 @@ const ActivityList = props => {
   };
 
   return (
-    <MainTable
-      newItem={table.newItem}
-      tableHead={table.tableHead}
-      tableData={table.tableData}
-      tablePages={table.tablePages}
-      tableColumns={table.tableColumns}
-      actions={table.actions}
-      {...props}
-    />
+    <>
+      <div className="d-sm-none">
+        <MainList
+          newItem={table.newItem}
+          tableHead={table.tableHead}
+          tableData={table.tableData}
+          tablePages={table.tablePages}
+          tableColumns={table.tableColumns}
+          actions={table.actions}
+          {...props}
+        />
+      </div>
+      <div className="d-none d-sm-block">
+        <MainTable
+          newItem={table.newItem}
+          tableHead={table.tableHead}
+          tableData={table.tableData}
+          tablePages={table.tablePages}
+          tableColumns={table.tableColumns}
+          actions={table.actions}
+          {...props}
+        />
+      </div>
+    </>
   );
 };
 

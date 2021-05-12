@@ -51,3 +51,30 @@ export async function activate(request) {
 
   return result;
 }
+
+export async function uploadAvatar(id, request) {
+  const formData = new FormData();
+  formData.append('avatar', request.avatar);
+
+  const header = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  const result = await axios
+    .put(`/avatar/${id}`, formData, header)
+    .then(response => response.data)
+    .catch(error => error.response.data);
+
+  return result;
+}
+
+export async function getAvatar(fileName) {
+  const result = await axios
+    .get(`/avatar/${fileName}`)
+    .then(response => response.data)
+    .catch(error => error.response.data);
+
+  return result;
+}

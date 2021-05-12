@@ -59,12 +59,14 @@
     "allowance.list.column1": "Monto $",
     "allowance.list.column2": "Desde",
     "allowance.list.column3": "Hasta",
+    "allowance.list.column4": "Hijo(a)",
     "allowance.form.title": "Nueva Mesada",
     "allowance.form.title.edit": "Editar Mesada",
     "allowance.form.info": "Campos obligatorios",
     "allowance.form.control1": "Monto $",
     "allowance.form.control2": "Desde",
     "allowance.form.control3": "Hasta",
+    "allowance.form.control4": "Hijo(a)",
     "allowance.message.0": "Registro guardado satisfactoriamente",    
     "allowance.message.-1": "Error de comunicación, intenta más tarde",
     "allowance.message.-99": "La información no es válida, por favor revisa",  
@@ -122,7 +124,7 @@
     "register.form.control4": "Confirma Contraseña",
     "register.form.old": "¿Ya tienes una cuenta?",
     "register.form.login": "Ingresa",      
-    "register.message.0": "La cuenta se ha registrado satisfactoriamente",    
+    "register.message.0": "Te hemos enviado un correo para activar tu cuenta",    
     "register.message.-1": "Error de comunicación, intenta más tarde",
     "register.message.-2": "Nombre de usuario duplicado, por favor utiliza otro",
     "register.message.-3": "Correo duplicado, por favor utiliza otro", 
@@ -133,7 +135,7 @@
     "forgot.form.control1": "Correo",
     "forgot.form.remember": "¿Recordaste tu contraseña?",
     "forgot.form.login": "Ingresa",   
-    "forgot.message.0": "Te hemos enviado un correo con tu nueva contraseña, por favor revísalo",    
+    "forgot.message.0": "Te hemos enviado un correo con tu nueva contraseña",    
     "forgot.message.-1": "Error de comunicación, intenta más tarde",    
     "forgot.message.-2": "Usuario no encontrado",   
     
@@ -228,5 +230,8 @@
     "date.days.ago": "Hace {{days}} dia(s)",
 
     "no.records": "No existen registros",
-    "total": "Total"
+    "No Name": "Sin nombre",
+    "total": "Total",
+    "welcome": "Te damos la bienvenida {{name}}",
+    "welcome.message": "Acá puedes modificar los datos de tu cuenta"
 }

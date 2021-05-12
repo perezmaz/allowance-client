@@ -44,6 +44,8 @@ const RegisterForm = props => {
 
   const save = async event => {
     event.preventDefault();
+    event.target.setAttribute('disabled', 'disabled');
+
     const request = {
       email: inputs.find(aux => aux.name === 'email').value,
       username: inputs.find(aux => aux.name === 'username').value,
@@ -55,6 +57,7 @@ const RegisterForm = props => {
     let type = 'info';
     if (response.code !== 0) {
       type = 'danger';
+      event.target.removeAttribute('disabled');
     } else {
       history.push('/login');
     }

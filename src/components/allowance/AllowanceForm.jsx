@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-unresolved */
 import React, { useState, useEffect } from 'react';
@@ -5,6 +6,7 @@ import Moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import MainForm from '../MainForm';
 import useMessage from '../../hooks/useMessage';
+import { list } from '../../api/child';
 import { save, edit, update } from '../../api/allowance';
 
 const AllowanceForm = props => {
@@ -35,14 +37,47 @@ const AllowanceForm = props => {
       isInvalid: false,
       validationMessage: '',
     },
+    {
+      name: 'child',
+      value: '',
+      isInvalid: false,
+      validationMessage: '',
+    },
   ]);
+
+  const [children, setChildren] = useState([]);
+
+  useEffect(() => {
+    const data = {
+      active: true,
+    };
+
+    list(data)
+      .then(childResponse => {
+        if (childResponse.code === 0) {
+          const childData = childResponse.result.map(item => (
+            {
+              value: item._id,
+              text: item.child.name,
+            }
+          ));
+          setChildren([
+            {
+              value: '',
+              text: 'Seleccione',
+            },
+            ...childData,
+          ]);
+        }
+      });
+  }, []);
 
   useEffect(() => {
     if (id !== 0) {
       edit(id)
         .then(response => {
           if (response.code === 0) {
-            const { amount, from, to } = response.result;
+            const { amount, from, to, child } = response.result;
             setInputs([
               {
                 name: 'amount',
@@ -59,6 +94,12 @@ const AllowanceForm = props => {
               {
                 name: 'to',
                 value: Moment(to).format(t('date.format')),
+                isInvalid: false,
+                validationMessage: '',
+              },
+              {
+                name: 'child',
+                value: child._id,
                 isInvalid: false,
                 validationMessage: '',
               },
@@ -80,11 +121,13 @@ const AllowanceForm = props => {
 
   const saveRecord = async event => {
     event.preventDefault();
+    event.target.setAttribute('disabled', 'disabled');
 
     const request = {
       amount: inputs.find(aux => aux.name === 'amount').value,
       from: dateTransform(inputs.find(aux => aux.name === 'from').value),
       to: dateTransform(inputs.find(aux => aux.name === 'to').value),
+      child: inputs.find(aux => aux.name === 'child').value,
     };
 
     let response = '';
@@ -96,6 +139,7 @@ const AllowanceForm = props => {
 
     let type = 'info';
     if (response.code !== 0) {
+      event.target.removeAttribute('disabled');
       type = 'danger';
     } else {
       history.goBack();
@@ -116,10 +160,19 @@ const AllowanceForm = props => {
     information,
     controls: [
       {
+        name: 'child',
+        label: t('allowance.form.control4'),
+        type: 'select',
+        sizeXs: 6,
+        sizeMd: 6,
+        options: children,
+        validation: 'required',
+      },
+      {
         name: 'amount',
         label: t('allowance.form.control1'),
         type: 'text',
-        sizeXs: 12,
+        sizeXs: 6,
         sizeMd: 6,
         validation: 'number|required|length:1,10',
       },
@@ -128,14 +181,14 @@ const AllowanceForm = props => {
         label: t('allowance.form.control2'),
         type: 'datetime',
         sizeXs: 6,
-        sizeMd: 3,
+        sizeMd: 6,
       },
       {
         name: 'to',
         label: t('allowance.form.control3'),
         type: 'datetime',
         sizeXs: 6,
-        sizeMd: 3,
+        sizeMd: 6,
       },
     ],
 

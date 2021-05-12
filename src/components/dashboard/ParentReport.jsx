@@ -12,9 +12,12 @@ import {
   Tab,
   Card,
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { list } from '../../api/tracing';
+import NoAvatar from '../../assets/img/user.png';
+import api from '../../config/api';
 
 const ChildReport = () => {
   const { t } = useTranslation();
@@ -36,6 +39,7 @@ const ChildReport = () => {
           child: {
             name: record.child.name,
             age: record.child.age,
+            avatar: record.child.avatar,
           },
           tracking: [
             {
@@ -50,6 +54,7 @@ const ChildReport = () => {
           percents: [percent],
           activities: record.activities.map(item => (
             {
+              _id: item._id,
               activity: item.activity,
               tracingPercent: item.tracingPercent,
             }
@@ -80,6 +85,7 @@ const ChildReport = () => {
           if (!findedItem) {
             return (
               {
+                _id: item._id,
                 activity: item.activity,
                 tracingPercent: item.tracingPercent,
               }
@@ -90,6 +96,7 @@ const ChildReport = () => {
 
           return (
             {
+              _id: findedItem._id,
               activity: findedItem.activity,
               tracingPercent: findedItem.tracingPercent,
             }
@@ -128,13 +135,17 @@ const ChildReport = () => {
     activities.forEach(item => {
       if ((item.tracingPercent > min) && (item.tracingPercent < max)) {
         badges.push(
-          <Badge
-            variant={type}
+          <LinkContainer
+            to={`activity/edit/${item._id}`}
             key={`badge-${type}-${item.activity}`}
-            className="mr-2"
           >
-            {item.activity}
-          </Badge>,
+            <Badge
+              variant={type}
+              className="mr-2 text-underline"
+            >
+              {item.activity}
+            </Badge>
+          </LinkContainer>,
         );
       }
     });
@@ -155,7 +166,12 @@ const ChildReport = () => {
           <Card>
             <Card.Body>
               <Row>
-                <Col>
+                <Col className="d-flex align-items-center">
+                  <img
+                    src={record.child.avatar ? `${api.HOST}:${api.PORT}/avatar/${record.child.avatar}` : NoAvatar}
+                    alt="Avatar"
+                    className="avatar mr-3"
+                  />
                   <span>
                     <h4 className="text-primary">
                       {record.child.name}
@@ -196,7 +212,11 @@ const ChildReport = () => {
                       {record.tracking.map(row => (
                         <tr key={row._id}>
                           <td>
-                            {row.date}
+                            <LinkContainer to={`tracing/edit/${row._id}`}>
+                              <span className="text-primary text-underline">
+                                {row.date}
+                              </span>
+                            </LinkContainer>
                           </td>
                           <td className="text-center">
                             {row.amount}

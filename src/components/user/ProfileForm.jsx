@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-unresolved */
@@ -8,16 +9,20 @@ import MainForm from '../MainForm';
 import useMessage from '../../hooks/useMessage';
 import { ACCESS_TOKEN } from '../../config/localStorage';
 import { getToken } from '../../api/auth';
-import { edit, update } from '../../api/user';
+import { edit, uploadAvatar, update } from '../../api/user';
+import api from '../../config/api';
 
-const ProfileForm = props => {
-  const { history } = props;
-
+const ProfileForm = () => {
   const { t } = useTranslation();
 
   const { openNotificationMessage } = useMessage();
 
   const [inputs, setInputs] = useState([
+    {
+      name: 'avatar',
+      value: '',
+      file: null,
+    },
     {
       name: 'name',
       value: '',
@@ -66,9 +71,10 @@ const ProfileForm = props => {
 
   useEffect(() => {
     edit(id)
-      .then(response => {
+      .then(async response => {
         if (response.code === 0) {
-          const { username, email, role, parent, child } = response.result;
+          const { username, email, role, parent, child, avatar } = response.result;
+
           let name = '';
           if (role === 'parent') {
             name = parent ? parent.name : '';
@@ -76,6 +82,11 @@ const ProfileForm = props => {
             name = child ? child.name : '';
           }
           setInputs([
+            {
+              name: 'avatar',
+              value: avatar ? `${api.HOST}:${api.PORT}/avatar/${avatar}` : '',
+              file: null,
+            },
             {
               name: 'name',
               value: name,
@@ -126,10 +137,21 @@ const ProfileForm = props => {
       name: inputs.find(aux => aux.name === 'name').value,
       username: inputs.find(aux => aux.name === 'username').value,
       email: inputs.find(aux => aux.name === 'email').value,
-      currentPassword: inputs.find(aux => aux.name === 'currentPassword').value,
-      newPassword: inputs.find(aux => aux.name === 'newPassword').value,
-      confirmPassword: inputs.find(aux => aux.name === 'confirmPassword').value,
     };
+
+    if (inputs.find(aux => aux.name === 'newPassword').value !== '') {
+      request.currentPassword = inputs.find(aux => aux.name === 'currentPassword').value;
+      request.newPassword = inputs.find(aux => aux.name === 'newPassword').value;
+      request.confirmPassword = inputs.find(aux => aux.name === 'confirmPassword').value;
+    }
+
+    const requestUpload = {
+      avatar: inputs.find(aux => aux.name === 'avatar').file,
+    };
+
+    if (requestUpload.avatar !== null) {
+      await uploadAvatar(id, requestUpload);
+    }
 
     const response = await update(id, request);
 
@@ -137,9 +159,10 @@ const ProfileForm = props => {
     if (response.code !== 0) {
       type = 'danger';
     } else {
-      history.push('/');
+      localStorage.setItem(ACCESS_TOKEN, response.result.accessToken);
+      window.location = '/';
     }
-    openNotificationMessage(type, t(`profile.message.${response.code}`));
+    openNotificationMessage(type, t('profile.message.0'));
   };
 
   const information = (
@@ -154,6 +177,13 @@ const ProfileForm = props => {
   const formData = {
     information,
     controls: [
+      {
+        name: 'avatar',
+        label: '',
+        type: 'avatar',
+        sizeXs: 12,
+        sizeMd: 12,
+      },
       {
         name: 'name',
         label: t('profile.form.control1'),
@@ -184,7 +214,7 @@ const ProfileForm = props => {
         type: 'password',
         sizeXs: 12,
         sizeMd: 4,
-        validation: 'password|required|length:8,20',
+        validation: 'password|length:0,20',
       },
       {
         name: 'newPassword',
@@ -192,7 +222,7 @@ const ProfileForm = props => {
         type: 'password',
         sizeXs: 12,
         sizeMd: 4,
-        validation: 'password|required|length:8,20',
+        validation: 'password|length:0,20',
       },
       {
         name: 'confirmPassword',
@@ -200,7 +230,7 @@ const ProfileForm = props => {
         type: 'password',
         sizeXs: 12,
         sizeMd: 4,
-        validation: 'required|password|compare:newPassword,profile.form.control5|length:8,20',
+        validation: 'password|compare:newPassword,profile.form.control5|length:0,20',
       },
     ],
     actions: [
@@ -218,13 +248,15 @@ const ProfileForm = props => {
   };
 
   return (
-    <MainForm
-      information={formData.information}
-      controls={formData.controls}
-      actions={formData.actions}
-      inputs={inputs}
-      setInputs={setInputs}
-    />
+    <>
+      <MainForm
+        information={formData.information}
+        controls={formData.controls}
+        actions={formData.actions}
+        inputs={inputs}
+        setInputs={setInputs}
+      />
+    </>
   );
 };
 

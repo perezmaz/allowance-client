@@ -22,6 +22,7 @@ const ForgotForm = () => {
 
   const reset = async event => {
     event.preventDefault();
+    event.target.setAttribute('disabled', 'disabled');
 
     const request = {
       email: inputs.find(aux => aux.name === 'email').value,
@@ -31,6 +32,7 @@ const ForgotForm = () => {
 
     let type = 'info';
     if (response.code !== 0) {
+      event.target.removeAttribute('disabled');
       type = 'danger';
       openNotificationMessage(type, t(`forgot.message.${response.code}`));
     } else {

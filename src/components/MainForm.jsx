@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import 'moment/locale/es';
 import Datetime from 'react-datetime';
 import { LinkContainer } from 'react-router-bootstrap';
+import UploadAvatar from './UploadAvatar';
 import validate from '../validations';
 
 const MainForm = props => {
@@ -19,7 +20,7 @@ const MainForm = props => {
     controls,
     actions,
     inputs = [],
-    setInputs = () => { },
+    setInputs = () => {},
     hasDivider = true,
     formHeader = '',
     formFooter = '',
@@ -60,6 +61,20 @@ const MainForm = props => {
     if (afterChange) {
       afterChange(event);
     }
+  };
+
+  const onAvatarChange = data => {
+    const { name, file, preview } = data;
+    const newInputs = inputs.filter(item => {
+      const refItem = item;
+      if (refItem.name === name) {
+        refItem.value = preview;
+        refItem.file = file;
+      }
+      return true;
+    });
+
+    setInputs(newInputs);
   };
 
   const defineDateProps = control => (
@@ -175,6 +190,14 @@ const MainForm = props => {
           >
             <Button variant="link">{control.label}</Button>
           </LinkContainer>
+        );
+      case 'avatar':
+        return (
+          <UploadAvatar
+            avatar={inputs.find(aux => aux.name === control.name).value}
+            setAvatar={onAvatarChange}
+            name={control.name}
+          />
         );
       default:
         return '';

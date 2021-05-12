@@ -176,18 +176,19 @@ body {
 
 .notification-message {
   background-color: $white;
-  min-width: 100%;
+  width: 100%;
   box-shadow: 1px 5px 3px 1px rgba(0, 0, 0, 0.3);
   padding: 10px;
   font-size: 14px;
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 0px;
+  margin-top: 0px;
   border-top: 2px solid $white;
   @media (min-width: 768px) {
-    min-width: 350px;
     margin-top: 20px;
-    margin-right: calc(50% - 175px);
+    width: 400px;  
+    margin-right: calc(50% - 200px);
   }
   opacity: 0;
   transition: opacity 300ms, transform 300ms;
@@ -196,15 +197,15 @@ body {
 .notification-push {
   color: $dark;
   background-color: $light-yellow;
-  min-width: 100%;
+  width: 100%;
   box-shadow: 1px 5px 3px 1px rgba(0, 0, 0, 0.3);
   padding: 10px;
   font-size: 14px;
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   right: 0px;
   @media (min-width: 768px) {
-    min-width: 350px;
+    width: 350px;
     margin-bottom: 70px;
     margin-right: 20px;
   }
@@ -268,4 +269,24 @@ body {
 
 .pl3 {
   padding-left: 3px;
+}
+
+.text-underline {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.upload-avatar {
+  display: table;
+  margin: 0px auto;
+  border: 2px dashed $secondary;
+  border-radius: 100px;
+  padding: 10px;
+  margin-bottom: 20px;
 }
