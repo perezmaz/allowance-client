@@ -5,10 +5,12 @@ import Moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import MainForm from '../../MainForm';
 import TracingFormActivities from './TracingFormActivities';
+import TracingFormNotes from './TracingFormNotes';
 import useMessage from '../../../hooks/useMessage';
 import { save } from '../../../api/tracing';
 import { list as listChild } from '../../../api/child';
 import { list as listActivity } from '../../../api/activity';
+import { listByChild } from '../../../api/note';
 import { findAmount } from '../../../api/allowance';
 import validate from '../../../validations';
 
@@ -51,6 +53,8 @@ const TracingForm = props => {
   const [activities, setActivities] = useState([]);
 
   const [total, setTotal] = useState(0);
+
+  const [notes, setNotes] = useState([]);
 
   const dateTransform = recordDate => {
     if (t('date.locale') === 'es') {
@@ -152,6 +156,30 @@ const TracingForm = props => {
       setActivities([]);
     }
   }, [child, baseAmount]);
+
+  useEffect(() => {
+    if ((date !== '') && (child !== '')) {
+      const request = {
+        child,
+        date,
+      };
+      listByChild(request)
+        .then(response => {
+          if (response.code === 0) {
+            setNotes(
+              response.result.map(item => (
+                {
+                  date: Moment(item.date).format(t('date.format')),
+                  note: item.note,
+                }
+              )),
+            );
+          }
+        });
+    } else {
+      setNotes([]);
+    }
+  }, [child]);
 
   const validateActivities = () => {
     let isValid = true;
@@ -260,12 +288,17 @@ const TracingForm = props => {
   };
 
   const loadActivities = (
-    <TracingFormActivities
-      activities={activities}
-      setActivities={setActivities}
-      total={total}
-      setTotal={setTotal}
-    />
+    <>
+      <TracingFormNotes
+        notes={notes}
+      />
+      <TracingFormActivities
+        activities={activities}
+        setActivities={setActivities}
+        total={total}
+        setTotal={setTotal}
+      />
+    </>
   );
 
   return (

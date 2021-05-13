@@ -130,7 +130,7 @@ const ParentReport = () => {
                   labels: tracing.labels,
                   datasets: [
                     {
-                      label: 'Cumplimiento',
+                      label: t('dashboard.parent.compliance'),
                       data: tracing.percents,
                       fill: true,
                       tension: 0.1,
@@ -158,7 +158,8 @@ const ParentReport = () => {
               <Card.Body>
                 <Card.Title className="text-primary mb-4">{record.activity}</Card.Title>
                 <Card.Subtitle className="mb-4 text-secondary">
-                  Promedio Cumplimiento: &nbsp;
+                  {t('dashboard.parent.compliance')}
+                  : &nbsp;
                   {getTracingPercent(record.activity) || '0'}
                   &nbsp;%
                 </Card.Subtitle>
@@ -170,14 +171,14 @@ const ParentReport = () => {
                     && getTracingPercent(record.activity) >= 60
                     && (
                       <Badge variant="success" className="mr-2">
-                        Actividad destacable
+                        {t('dashboard.parent.notable')}
                       </Badge>
                     )}
                   {getTracingPercent(record.activity)
                     && getTracingPercent(record.activity) < 40
                     && (
                       <Badge variant="danger" className="mr-2">
-                        Actividad por mejorar
+                        {t('dashboard.parent.toImprove')}
                       </Badge>
                     )}
                 </Card.Subtitle>

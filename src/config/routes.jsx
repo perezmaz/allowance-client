@@ -5,11 +5,13 @@ import {
   BsFillGridFill,
   BsFillCalendarFill,
   BsFillPersonFill,
+  BsFillChatDotsFill,
 } from 'react-icons/bs';
 import { GiPiggyBank } from 'react-icons/gi';
 import {
   FaClipboardList,
   FaChild,
+  FaStickyNote,
 } from 'react-icons/fa';
 
 // Pages
@@ -31,6 +33,9 @@ import ChildForm from '../pages/child/AddEdit';
 import NotificationList from '../pages/notification/List';
 import Dashboard from '../pages/dashboard/Dashboard';
 import ActivateForm from '../pages/user/Activate';
+import NoteList from '../pages/note/List';
+import NoteForm from '../pages/note/AddEdit';
+import MessageForm from '../pages/message/AddEdit';
 
 const routes = [
   {
@@ -206,6 +211,42 @@ const routes = [
     component: ActivateForm,
     exact: false,
     isPrivate: false,
+    roles: ['parent', 'child'],
+  },
+  {
+    type: 'link',
+    path: '/note',
+    component: NoteList,
+    exact: true,
+    icon: <FaStickyNote className="icon mr-2" />,
+    text: 'menu.note',
+    responsive: false,
+    isPrivate: true,
+    roles: ['parent'],
+  },
+  {
+    path: '/note/new',
+    component: NoteForm,
+    exact: true,
+    isPrivate: true,
+    roles: ['parent'],
+  },
+  {
+    path: '/note/edit/:id',
+    component: NoteForm,
+    exact: false,
+    isPrivate: true,
+    roles: ['parent'],
+  },
+  {
+    type: 'link',
+    path: '/message',
+    component: MessageForm,
+    exact: true,
+    icon: <BsFillChatDotsFill className="icon mr-2" />,
+    text: 'menu.messages',
+    responsive: false,
+    isPrivate: true,
     roles: ['parent', 'child'],
   },
 ];

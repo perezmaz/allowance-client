@@ -108,6 +108,7 @@ const MainForm = props => {
             onChange={(
               control.afterChange ? e => onInputChange(e, control.afterChange) : onInputChange
             )}
+            rows={control.rows ? control.rows : 3}
           >
             {control.options && control.options.map(option => (
               <option

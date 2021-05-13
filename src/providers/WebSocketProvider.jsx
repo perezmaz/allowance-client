@@ -11,6 +11,18 @@ import { ACCESS_TOKEN } from '../config/localStorage';
 
 export const WebSocketContext = createContext();
 
+const socket = io(`${notificationApi.HOST}:${notificationApi.SOCKET_PORT}`,
+  {
+    transports: ['websocket'],
+    upgrade: false,
+  });
+
+const accessToken = getToken(ACCESS_TOKEN);
+if (accessToken) {
+  const payload = jwtDecode(accessToken);
+  socket.emit('join', payload.parentId);
+}
+
 const WebSocketProvider = ({ children }) => {
   const { t } = useTranslation();
 
@@ -22,34 +34,38 @@ const WebSocketProvider = ({ children }) => {
     show: false,
   });
 
-  const socket = io(`${notificationApi.HOST}:${notificationApi.SOCKET_PORT}`, { transports: ['websocket'], upgrade: false });
-
-  const showNotificationAlert = data => {
-    const token = getToken(ACCESS_TOKEN);
-    if (token) {
-      const payload = jwtDecode(token);
-
-      if (payload._id === data.to) {
-        setNotificationAlert({
-          user: data.user,
-          message: t(data.message),
-          show: true,
-        });
-
-        setTimeout(() => {
-          setNotificationAlert({
-            user: '',
-            message: '',
-            show: false,
-          });
-        }, 3500);
-      }
-    }
-  };
+  const [newMessage, setNewMessage] = useState(null);
 
   useEffect(() => {
+    const showNotificationAlert = data => {
+      const token = getToken(ACCESS_TOKEN);
+      if (token) {
+        const payload = jwtDecode(token);
+
+        if ((payload._id === data.to) || (payload.username !== data.username)) {
+          let show = true;
+          if (!data.to && window.location.pathname === '/message') {
+            show = false;
+          }
+          setNotificationAlert({
+            user: data.user,
+            message: t(data.message),
+            show,
+          });
+
+          setTimeout(() => {
+            setNotificationAlert({
+              user: '',
+              message: '',
+              show: false,
+            });
+          }, 3500);
+        }
+      }
+    };
+
     socket.on('newNotification', data => showNotificationAlert(data));
-  }, []);
+  }, [notificationAlert]);
 
   useEffect(() => {
     const token = getToken(ACCESS_TOKEN);
@@ -62,11 +78,35 @@ const WebSocketProvider = ({ children }) => {
           }
         });
     }
-  }, [notificationsCount, notificationAlert]);
+  }, [notificationAlert]);
+
+  useEffect(() => {
+    socket.on('newMessage', data => {
+      setNewMessage(data);
+    });
+  }, [newMessage]);
+
+  const sendChatNotification = () => {
+    const token = getToken(ACCESS_TOKEN);
+
+    if (token) {
+      const payload = jwtDecode(token);
+
+      const data = {
+        message: 'notification.new.message',
+        user: payload.name,
+        username: payload.username,
+        channel: payload.parentId,
+      };
+      socket.emit('newNotification', data);
+    }
+  };
 
   const provider = {
+    newMessage,
     notificationsCount,
     notificationAlert,
+    sendChatNotification,
   };
 
   return (

@@ -6,6 +6,8 @@
     "menu.profile": "My Profile",
     "menu.children": "Children",
     "menu.logout": "Logout",
+    "menu.note": "Notes",
+    "menu.messages": "Messages",
     
     "notification.title": "Notifications",
     "notification.load": "Show more...",
@@ -182,6 +184,7 @@
     "notification.list.column3": "Message",
     "notification.new.comment": "Commented a tracing",
     "notification.new.tracing": "Created a new tracing",
+    "notification.new.message": "Sent you a message",
     
     "dashboard.title": "Dashboard",
     "dashboard.parent.tracing": "Tracing",
@@ -193,6 +196,27 @@
     "dashboard.parent.list.column3": "Obtained $",
     "dashboard.parent.list.column4": "Compliance %",    
 
+    "note.list.title": "Notes",
+    "note.list.new": "New Note",
+    "note.list.column1": "Date",
+    "note.list.column2": "Child",
+    "note.list.column3": "Note",
+    "note.form.title": "New Note",
+    "note.form.edit.title": "Edit Note",
+    "note.form.info": "Required fields",
+    "note.form.control1": "Date",
+    "note.form.control2": "Child",
+    "note.form.control3": "Note",
+    "note.message.0": "Record saved successfully",    
+    "note.message.-1": "Ops, we have comunications problems, try again later",
+    "note.message.-99": "Information not valid, please check your data",
+    "note.message.delete.0": "Record deleted",
+    "note.message.delete.-1": "Ops, we have comunications problems, try again later",
+    "note.message.delete.-2": "Record not found please refresh the page",        
+
+    "message.form.title": "Messages",
+    "message.form.control1": "Type your message",
+
     "activate.form.message": "We are activating your account please wait.",
 
     "action.edit": "Edit",
@@ -203,6 +227,7 @@
     "action.register": "Register",
     "action.reset": "Reset",
     "action.show": "Show",
+    "action.send": "Send",
 
     "footer.text": "All rights reserved 2021",
 

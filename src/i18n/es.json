@@ -7,6 +7,9 @@
     "menu.children": "Hijos(as)",
     "menu.logout": "Cerrar sesión",    
     "menu.notification": "Notificaciones",
+    "menu.note": "Notas",
+    "menu.messages": "Mensajes",
+
 
     "notification.title": "Notificaciones",
     "notification.load": "Ver todas...",
@@ -183,6 +186,7 @@
     "notification.list.column3": "Mensaje",
     "notification.new.comment": "Ha comentado un seguimiento",
     "notification.new.tracing": "Ha creado un nuevo seguimiento",
+    "notification.new.message": "Te ha enviado un mensaje",
 
     "dashboard.title": "Reporte",
     "dashboard.parent.tracing": "Seguimiento",
@@ -194,6 +198,26 @@
     "dashboard.parent.list.column3": "Obtenido $",
     "dashboard.parent.list.column4": "Cumpliento %",
 
+    "note.list.title": "Notas",
+    "note.list.new": "Nueva Nota",
+    "note.list.column1": "Fecha",
+    "note.list.column2": "Hijo(a)",
+    "note.list.column3": "Nota",
+    "note.form.title": "Nueva Nota",
+    "note.form.title.edit": "Editar Nota",
+    "note.form.info": "Campos obligatorios",
+    "note.form.control1": "Fecha",
+    "note.form.control2": "Hijo(a)",
+    "note.form.control3": "Nota",
+    "note.message.0": "Registro guardado satisfactoriamente",    
+    "note.message.-1": "Error de comunicación, intenta más tarde",
+    "note.message.-99": "La información no es válida, por favor revisa",  
+    "note.message.delete.0": "Registro eliminado",
+    "note.message.delete.-1": "Error de comunicación, intenta más tarde",
+
+    "message.form.title": "Mensajes",
+    "message.form.control1": "Escribe tu mensaje",
+
     "activate.form.message": "Estamos activando su cuenta, al finalizar el proceso será redireccionado.",
 
     "action.edit": "Editar",
@@ -204,6 +228,7 @@
     "action.register": "Registrar",
     "action.reset": "Restablecer",    
     "action.show": "Ver",
+    "action.send": "Enviar",
 
     "footer.text": "Todos los derechos reservados 2021",
 

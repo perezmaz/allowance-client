@@ -290,3 +290,30 @@ body {
   padding: 10px;
   margin-bottom: 20px;
 }
+
+.min-500 {
+  min-height: 400px;
+}
+
+.message-in, .message-out {
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.message-out {
+  align-self: flex-end;
+  background-color: $blue;
+  color: $white;
+}
+
+.message-in {
+  align-self: flex-start;
+  background-color: $gray-200;
+  color: $dark;
+}
+
+.pointer {
+  cursor: pointer;
+}
