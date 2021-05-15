@@ -16,6 +16,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { list } from '../../api/tracing';
+import { list as childList } from '../../api/child';
 import NoAvatar from '../../assets/img/user.png';
 import api from '../../config/api';
 
@@ -113,7 +114,25 @@ const ChildReport = () => {
   useEffect(() => {
     list().then(response => {
       if (response.code === 0) {
-        setRecords(mapData(response.result));
+        if (response.result.length > 0) {
+          setRecords(mapData(response.result));
+        } else {
+          childList().then(childResponse => {
+            if (childResponse.code === 0) {
+              const empty = childResponse.result.map(item => (
+                {
+                  child: {
+                    _id: item._id,
+                    name: item.child.name,
+                    age: item.child.age || 'N/A',
+                  },
+                  activities: [],
+                }
+              ));
+              setRecords(mapData(empty));
+            }
+          });
+        }
       }
     });
   }, []);
@@ -179,7 +198,7 @@ const ChildReport = () => {
                     <h6 className="text-secondary">
                       {record.child.age}
                       &nbsp;
-                      {t('date.years')}
+                      {record.child.age !== 'N/A' ? t('date.years') : ''}
                     </h6>
                   </span>
                 </Col>
@@ -208,30 +227,43 @@ const ChildReport = () => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {record.tracking.map(row => (
-                        <tr key={row._id}>
-                          <td>
-                            <LinkContainer to={`tracing/edit/${row._id}`}>
-                              <span className="text-primary text-underline">
-                                {row.date}
-                              </span>
-                            </LinkContainer>
-                          </td>
-                          <td className="text-center">
-                            {row.amount}
-                          </td>
-                          <td className="text-center">
-                            {row.realAmount}
-                          </td>
-                          <td className="text-center">
-                            <Badge variant={defineStatus(row.percent)}>
-                              {row.percent}
-                            </Badge>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
+                    {records.tracking
+                      && (
+                        <tbody>
+                          {record.tracking.map(row => (
+                            <tr key={row._id}>
+                              <td>
+                                <LinkContainer to={`tracing/edit/${row._id}`}>
+                                  <span className="text-primary text-underline">
+                                    {row.date}
+                                  </span>
+                                </LinkContainer>
+                              </td>
+                              <td className="text-center">
+                                {row.amount}
+                              </td>
+                              <td className="text-center">
+                                {row.realAmount}
+                              </td>
+                              <td className="text-center">
+                                <Badge variant={defineStatus(row.percent)}>
+                                  {row.percent}
+                                </Badge>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      )}
+                    {!records.tracking
+                      && (
+                        <tbody>
+                          <tr>
+                            <td colSpan="4" className="text-center">
+                              {t('no.records')}
+                            </td>
+                          </tr>
+                        </tbody>
+                      )}
                   </Table>
                 </Col>
                 <Col md="6">

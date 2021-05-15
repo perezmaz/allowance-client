@@ -106,8 +106,12 @@ body {
 }
 
 .icon {
-  font-size: 20px;
+  font-size: 15px;
   margin-top: -2px;
+  @media (min-width: 768px) {
+    font-size: 25px;
+    min-width: 20px;
+  }  
 }
 
 .photo {
@@ -187,7 +191,7 @@ body {
   border-top: 2px solid $white;
   @media (min-width: 768px) {
     margin-top: 20px;
-    width: 400px;  
+    width: 400px;
     margin-right: calc(50% - 200px);
   }
   opacity: 0;
@@ -291,11 +295,8 @@ body {
   margin-bottom: 20px;
 }
 
-.min-500 {
-  min-height: 400px;
-}
-
-.message-in, .message-out {
+.message-in,
+.message-out {
   max-width: 400px;
   padding: 20px;
   border-radius: 20px;
@@ -316,4 +317,40 @@ body {
 
 .pointer {
   cursor: pointer;
+}
+
+.resend-link {
+  margin-top: -3px;
+}
+
+.scroll {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.wizard {
+  min-height: 600px;
+  .wizard-menu {
+    background-color: $gray-300;
+    min-width: 40px;
+    @media (min-width: 768px) {
+      min-width: 80px;
+    }
+    .wizard-menu-button {
+      background-color: $light;
+      width: 25px;
+      height: 25px;
+      padding: 0px;
+      border-radius: 100px;
+      @media (min-width: 768px) {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    .wizard-menu-divider {
+      width: 2px;
+      height: 50px;
+      background-color: $light;
+    }
+  }
 }

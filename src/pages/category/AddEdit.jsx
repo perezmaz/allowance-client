@@ -11,12 +11,16 @@ import PageTitle from '../../components/PageTitle';
 import CategoryForm from '../../components/category/CategoryForm';
 
 const AddEdit = props => {
-  const { location, match } = props;
+  const { location, match, history } = props;
   const { params } = match;
   const { pathname } = location;
   const { id = 0 } = params;
 
   const { t } = useTranslation();
+
+  const goBack = () => {
+    history.goBack();
+  };
 
   const pageTitle = {
     title: id === 0 ? t('category.form.title') : t('category.form.title.edit'),
@@ -48,7 +52,7 @@ const AddEdit = props => {
       </Row>
       <Row>
         <Col>
-          <CategoryForm {...props} />
+          <CategoryForm {...props} saveCallback={goBack} />
         </Col>
       </Row>
     </Container>

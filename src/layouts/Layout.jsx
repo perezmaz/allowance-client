@@ -17,6 +17,7 @@ import useModal from '../hooks/useModal';
 import useMessage from '../hooks/useMessage';
 import useAuth from '../hooks/useAuth';
 import useWebSocket from '../hooks/useWebSocket';
+import { TUTORIAL } from '../config/localStorage';
 
 const Layout = () => {
   const { notificationMessage } = useMessage();
@@ -33,15 +34,17 @@ const Layout = () => {
     return null;
   }
 
+  const tutorial = localStorage.getItem(TUTORIAL);
+
   const Header = () => {
-    if (user) {
+    if (user && (tutorial === 'completed' || user.role === 'child')) {
       return <PrivateHeader />;
     }
     return <PublicHeader />;
   };
 
   const Footer = () => {
-    if (user) {
+    if (user && (tutorial === 'completed' || user.role === 'child')) {
       return <PrivateFooter />;
     }
     return <PublicFooter />;
@@ -49,9 +52,9 @@ const Layout = () => {
 
   return (
     <BrowserRouter>
-      <div className={auth ? baseMainStyle : `${baseMainStyle} background`}>
+      <div className={auth && (tutorial === 'completed' || user.role === 'child') ? baseMainStyle : `${baseMainStyle} background`}>
         <Header />
-        <main className={auth ? `${baseContentStyle} main-content` : baseContentStyle}>
+        <main className={auth && (tutorial === 'completed' || user.role === 'child') ? `${baseContentStyle} main-content` : baseContentStyle}>
           <Switch>
             {routes.filter(item => item.type !== 'divider').map(route => {
               if (!user || (user && route.roles.includes(user.role))) {

@@ -283,6 +283,10 @@ const MainForm = props => {
             </div>
             <div className="ml-auto">
               {actions.map(action => {
+                if (action.hide) {
+                  return '';
+                }
+
                 if (action.url) {
                   return (
                     <LinkContainer

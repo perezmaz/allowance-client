@@ -36,6 +36,7 @@ import ActivateForm from '../pages/user/Activate';
 import NoteList from '../pages/note/List';
 import NoteForm from '../pages/note/AddEdit';
 import MessageForm from '../pages/message/AddEdit';
+import Wizard from '../pages/tutorial/Tutorial';
 
 const routes = [
   {
@@ -248,6 +249,13 @@ const routes = [
     responsive: false,
     isPrivate: true,
     roles: ['parent', 'child'],
+  },
+  {
+    path: '/tutorial',
+    component: Wizard,
+    exact: true,
+    isPrivate: true,
+    roles: ['parent'],
   },
 ];
 

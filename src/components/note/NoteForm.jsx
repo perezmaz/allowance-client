@@ -42,11 +42,7 @@ const NoteForm = props => {
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
-    const data = {
-      active: true,
-    };
-
-    list(data)
+    list()
       .then(childResponse => {
         if (childResponse.code === 0) {
           const childData = childResponse.result.map(item => (

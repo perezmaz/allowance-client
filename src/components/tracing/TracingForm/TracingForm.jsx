@@ -77,11 +77,7 @@ const TracingForm = props => {
   };
 
   useEffect(() => {
-    const data = {
-      active: true,
-    };
-
-    listChild(data)
+    listChild()
       .then(childResponse => {
         if (childResponse.code === 0) {
           const childData = childResponse.result.map(item => (

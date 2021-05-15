@@ -6,6 +6,7 @@ import {
   Redirect,
   Route,
 } from 'react-router-dom';
+import { logout } from '../api/auth';
 
 const MainRoute = ({ isAuth, isPrivate, path, ...rest }) => {
   if (!isAuth) {
@@ -16,6 +17,10 @@ const MainRoute = ({ isAuth, isPrivate, path, ...rest }) => {
   }
   if (isPrivate) {
     return <Route path={path} {...rest} />;
+  }
+  if (path === '/activate/:token') {
+    logout();
+    window.location = '/';
   }
   return <Redirect to="/" />;
 };

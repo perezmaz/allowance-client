@@ -10,7 +10,7 @@ import { list } from '../../api/child';
 import { save, edit, update } from '../../api/allowance';
 
 const AllowanceForm = props => {
-  const { match, history } = props;
+  const { match, tutorial = false, saveCallBack = null, refresh = false } = props;
   const { params } = match;
   const { id = 0 } = params;
 
@@ -48,11 +48,7 @@ const AllowanceForm = props => {
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
-    const data = {
-      active: true,
-    };
-
-    list(data)
+    list()
       .then(childResponse => {
         if (childResponse.code === 0) {
           const childData = childResponse.result.map(item => (
@@ -70,7 +66,7 @@ const AllowanceForm = props => {
           ]);
         }
       });
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (id !== 0) {
@@ -141,8 +137,10 @@ const AllowanceForm = props => {
     if (response.code !== 0) {
       event.target.removeAttribute('disabled');
       type = 'danger';
+    } else if (!saveCallBack) {
+      openNotificationMessage(type, t(`child.message.${response.code}`));
     } else {
-      history.goBack();
+      saveCallBack();
     }
     openNotificationMessage(type, t(`allowance.message.${response.code}`));
   };
@@ -205,6 +203,16 @@ const AllowanceForm = props => {
       },
     ],
   };
+
+  if (tutorial) {
+    formData.actions = [
+      {
+        variant: 'primary',
+        text: t('action.saveContinue'),
+        onClick: saveRecord,
+      },
+    ];
+  }
 
   return (
     <MainForm

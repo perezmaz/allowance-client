@@ -6,7 +6,7 @@ import LoginFormHeader from './LoginFormHeader';
 import LoginFormFooter from './LoginFormFooter';
 import { login } from '../../../api/user';
 import useMessage from '../../../hooks/useMessage';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../../config/localStorage';
+import { ACCESS_TOKEN, REFRESH_TOKEN, TUTORIAL } from '../../../config/localStorage';
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -14,7 +14,7 @@ const LoginForm = () => {
 
   const [inputs, setInputs] = useState([
     {
-      name: 'username',
+      name: 'email',
       value: '',
       isInvalid: false,
       validationMessage: '',
@@ -31,7 +31,7 @@ const LoginForm = () => {
     event.preventDefault();
 
     const request = {
-      username: inputs.find(aux => aux.name === 'username').value,
+      email: inputs.find(aux => aux.name === 'email').value,
       password: inputs.find(aux => aux.name === 'password').value,
     };
 
@@ -44,7 +44,12 @@ const LoginForm = () => {
     } else {
       localStorage.setItem(ACCESS_TOKEN, response.result.accessToken);
       localStorage.setItem(REFRESH_TOKEN, response.result.refreshToken);
-      window.location.href = '/';
+      const tutorial = localStorage.getItem(TUTORIAL);
+      if (tutorial === 'completed') {
+        window.location.href = '/';
+      } else {
+        window.location.href = '/tutorial';
+      }
     }
   };
 
@@ -56,12 +61,12 @@ const LoginForm = () => {
     information: '',
     controls: [
       {
-        name: 'username',
+        name: 'email',
         label: t('login.form.control1'),
-        type: 'text',
+        type: 'email',
         sizeXs: 12,
         sizeMd: 12,
-        validation: 'text|required|length:3,30',
+        validation: 'email|required',
       },
       {
         name: 'password',

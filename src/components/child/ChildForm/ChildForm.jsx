@@ -1,18 +1,21 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import MainForm from '../MainForm';
-import useMessage from '../../hooks/useMessage';
-import { save, edit, update } from '../../api/child';
+import MainForm from '../../MainForm';
+import useMessage from '../../../hooks/useMessage';
+import { save, edit, update } from '../../../api/child';
+import ChildFormFooter from './ChildFormFooter';
 
 const ChildForm = props => {
-  const { history, match } = props;
+  const { match, saveCallBack = null, tutorial = false } = props;
   const { params } = match;
   const { id = 0 } = params;
 
   const { t } = useTranslation();
 
   const { openNotificationMessage } = useMessage();
+
+  const [isActive, setIsActive] = useState(false);
 
   const [inputs, setInputs] = useState([
     {
@@ -33,12 +36,6 @@ const ChildForm = props => {
       isInvalid: false,
       validationMessage: '',
     },
-    {
-      name: 'username',
-      value: '',
-      isInvalid: false,
-      validationMessage: '',
-    },
   ]);
 
   useEffect(() => {
@@ -46,7 +43,7 @@ const ChildForm = props => {
       edit(id)
         .then(response => {
           if (response.code === 0) {
-            const { email, child, username } = response.result;
+            const { email, child, active } = response.result;
             const { name, age } = child;
             setInputs([
               {
@@ -67,13 +64,8 @@ const ChildForm = props => {
                 isInvalid: false,
                 validationMessage: '',
               },
-              {
-                name: 'username',
-                value: username,
-                isInvalid: false,
-                validationMessage: '',
-              },
             ]);
+            setIsActive(active);
           } else {
             openNotificationMessage('error', t(`child.message.${response.code}`));
           }
@@ -89,7 +81,6 @@ const ChildForm = props => {
       name: inputs.find(aux => aux.name === 'name').value,
       age: inputs.find(aux => aux.name === 'age').value,
       email: inputs.find(aux => aux.name === 'email').value,
-      username: inputs.find(aux => aux.name === 'username').value,
     };
 
     let response = '';
@@ -103,8 +94,10 @@ const ChildForm = props => {
     if (response.code !== 0) {
       event.target.removeAttribute('disabled');
       type = 'danger';
+    } else if (!saveCallBack) {
+      openNotificationMessage(type, t(`child.message.${response.code}`));
     } else {
-      history.goBack();
+      saveCallBack();
     }
     openNotificationMessage(type, t(`child.message.${response.code}`));
   };
@@ -118,6 +111,8 @@ const ChildForm = props => {
     </div>
   );
 
+  const formFooter = !isActive ? <ChildFormFooter id={id} /> : '';
+
   const formData = {
     information,
     controls: [
@@ -125,7 +120,7 @@ const ChildForm = props => {
         name: 'name',
         label: t('child.form.control1'),
         type: 'text',
-        sizeXs: 8,
+        sizeXs: 12,
         sizeMd: 5,
         validation: 'name|required|length:1,30',
       },
@@ -133,7 +128,7 @@ const ChildForm = props => {
         name: 'age',
         label: t('child.form.control2'),
         type: 'text',
-        sizeXs: 4,
+        sizeXs: 12,
         sizeMd: 2,
         validation: 'number|length:1,2',
       },
@@ -144,14 +139,6 @@ const ChildForm = props => {
         sizeXs: 12,
         sizeMd: 5,
         validation: 'email|required',
-      },
-      {
-        name: 'username',
-        label: t('child.form.control4'),
-        type: 'text',
-        sizeXs: 12,
-        sizeMd: 5,
-        validation: 'text|required|length:3,20',
       },
     ],
     actions: [
@@ -164,9 +151,20 @@ const ChildForm = props => {
         url: '/child',
         variant: 'default',
         text: t('action.back'),
+        hide: tutorial,
       },
     ],
   };
+
+  if (tutorial) {
+    formData.actions = [
+      {
+        variant: 'primary',
+        text: t('action.saveContinue'),
+        onClick: saveRecord,
+      },
+    ];
+  }
 
   return (
     <MainForm
@@ -175,6 +173,7 @@ const ChildForm = props => {
       actions={formData.actions}
       inputs={inputs}
       setInputs={setInputs}
+      formFooter={formFooter}
     />
   );
 };

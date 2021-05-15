@@ -7,7 +7,7 @@ import useMessage from '../../hooks/useMessage';
 import { save, edit, update } from '../../api/category';
 
 const CategoryForm = props => {
-  const { history, match } = props;
+  const { match, tutorial = false, saveCallBack = null } = props;
   const { params } = match;
   const { id = 0 } = params;
 
@@ -77,8 +77,10 @@ const CategoryForm = props => {
     if (response.code !== 0) {
       event.target.removeAttribute('disabled');
       type = 'danger';
+    } else if (!saveCallBack) {
+      openNotificationMessage(type, t(`child.message.${response.code}`));
     } else {
-      history.goBack();
+      saveCallBack();
     }
     openNotificationMessage(type, t(`category.message.${response.code}`));
   };
@@ -124,6 +126,16 @@ const CategoryForm = props => {
       },
     ],
   };
+
+  if (tutorial) {
+    formData.actions = [
+      {
+        variant: 'primary',
+        text: t('action.saveContinue'),
+        onClick: saveRecord,
+      },
+    ];
+  }
 
   return (
     <MainForm

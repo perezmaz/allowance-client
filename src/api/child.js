@@ -44,3 +44,12 @@ export async function remove(id) {
 
   return result;
 }
+
+export async function resend(id) {
+  const result = await axios
+    .put(`/child/activate/${id}`)
+    .then(response => response.data)
+    .catch(error => error.response.data);
+
+  return result;
+}

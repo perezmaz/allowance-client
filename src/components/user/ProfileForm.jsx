@@ -30,12 +30,6 @@ const ProfileForm = () => {
       validationMessage: '',
     },
     {
-      name: 'username',
-      value: '',
-      isInvalid: false,
-      validationMessage: '',
-    },
-    {
       name: 'email',
       value: '',
       isInvalid: false,
@@ -73,7 +67,7 @@ const ProfileForm = () => {
     edit(id)
       .then(async response => {
         if (response.code === 0) {
-          const { username, email, role, parent, child, avatar } = response.result;
+          const { email, role, parent, child, avatar } = response.result;
 
           let name = '';
           if (role === 'parent') {
@@ -90,12 +84,6 @@ const ProfileForm = () => {
             {
               name: 'name',
               value: name,
-              isInvalid: false,
-              validationMessage: '',
-            },
-            {
-              name: 'username',
-              value: username,
               isInvalid: false,
               validationMessage: '',
             },
@@ -135,7 +123,6 @@ const ProfileForm = () => {
 
     const request = {
       name: inputs.find(aux => aux.name === 'name').value,
-      username: inputs.find(aux => aux.name === 'username').value,
       email: inputs.find(aux => aux.name === 'email').value,
     };
 
@@ -189,16 +176,8 @@ const ProfileForm = () => {
         label: t('profile.form.control1'),
         type: 'text',
         sizeXs: 12,
-        sizeMd: 12,
-        validation: 'name|required|length:3,30',
-      },
-      {
-        name: 'username',
-        label: t('profile.form.control2'),
-        type: 'text',
-        sizeXs: 12,
         sizeMd: 6,
-        validation: 'text|required|length:3,30',
+        validation: 'name|required|length:3,30',
       },
       {
         name: 'email',

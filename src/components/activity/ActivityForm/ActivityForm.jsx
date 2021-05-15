@@ -11,7 +11,7 @@ import { list as listChild } from '../../../api/child';
 import { save, edit, update, findPercentLeft } from '../../../api/activity';
 
 const ActivityForm = props => {
-  const { history, match } = props;
+  const { match, tutorial = false, saveCallBack = null, refresh = false } = props;
   const { params } = match;
   const { id = 0 } = params;
 
@@ -94,14 +94,10 @@ const ActivityForm = props => {
           ]);
         }
       });
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
-    const data = {
-      active: true,
-    };
-
-    listChild(data)
+    listChild()
       .then(childResponse => {
         if (childResponse.code === 0) {
           const childData = childResponse.result.map(item => (
@@ -119,7 +115,7 @@ const ActivityForm = props => {
           ]);
         }
       });
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (id !== 0) {
@@ -238,8 +234,10 @@ const ActivityForm = props => {
       if (response.code !== 0) {
         event.target.removeAttribute('disabled');
         type = 'danger';
+      } else if (!saveCallBack) {
+        openNotificationMessage(type, t(`child.message.${response.code}`));
       } else {
-        history.goBack();
+        saveCallBack();
       }
       openNotificationMessage(type, t(`activity.message.${response.code}`));
     } else {
@@ -326,6 +324,16 @@ const ActivityForm = props => {
       },
     ],
   };
+
+  if (tutorial) {
+    formData.actions = [
+      {
+        variant: 'primary',
+        text: t('action.saveContinue'),
+        onClick: saveRecord,
+      },
+    ];
+  }
 
   return (
     <MainForm

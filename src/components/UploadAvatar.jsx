@@ -5,17 +5,22 @@ import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import NoAvatar from '../assets/img/user.png';
 import useAuth from '../hooks/useAuth';
+import useMessage from '../hooks/useMessage';
 
 const UploadAvatar = ({ avatar, setAvatar, name }) => {
   const { user } = useAuth();
 
   const { t } = useTranslation();
 
+  const { openNotificationMessage } = useMessage();
+
   const onDrop = useCallback(
     acceptedFiles => {
       const file = acceptedFiles[0];
       if (file) {
         setAvatar({ name, file, preview: URL.createObjectURL(file) });
+      } else {
+        openNotificationMessage('danger', t('profile.message.-6'));
       }
     }, [setAvatar],
   );

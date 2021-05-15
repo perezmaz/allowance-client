@@ -107,7 +107,7 @@
 
     "login.form.title": "Bienvenido",
     "login.form.subtitle": "Llena tus datos para continuar",
-    "login.form.control1": "Usuario",
+    "login.form.control1": "Correo",
     "login.form.control2": "Contraseña",
     "login.form.control3": "¿Olvidaste tu contraseña?",
     "login.form.new": "¿No tienes una cuenta?",
@@ -122,7 +122,7 @@
     "register.form.title": "Regístrate",
     "register.form.subtitle": "Llena los datos para registrarte",
     "register.form.control1": "Correo",
-    "register.form.control2": "Usuario",
+    "register.form.control2": "Nombre",
     "register.form.control3": "Contraseña",
     "register.form.control4": "Confirma Contraseña",
     "register.form.old": "¿Ya tienes una cuenta?",
@@ -156,6 +156,7 @@
     "profile.message.-3": "Password actual inválido",
     "profile.message.-4": "Nombre de usuario duplicado, por favor utiliza otro",
     "profile.message.-5": "Correo duplicado, por favor utiliza otro", 
+    "profile.message.-6": "Archivo inválido, debe ser un jpg o png de menos de 1MB",
     "profile.message.-99": "La información no es válida, por favor revisa",       
 
     "child.list.title": "Hijos(as)",
@@ -167,6 +168,8 @@
     "child.form.title": "Agregar Hijo(a)",
     "child.form.title.edit": "Editar Hijo(a)",
     "child.form.info": "Campos obligatorios",
+    "child.form.info2": "Te enviaremos un correo con las instrucciones para activar la cuenta de tu hijo(a)",
+    "child.form.info3": "si no has recibido el correo de activación aún, {{link}}",
     "child.form.control1": "Nombre",
     "child.form.control2": "Edad",    
     "child.form.control3": "Correo",     
@@ -179,6 +182,9 @@
     "child.message.delete.0": "Registro eliminado",
     "child.message.delete.-1": "Error de comunicación, intenta más tarde",
     "child.message.delete.-2": "Registro no encontrado, por favor carga de nuevo la página",
+    "child.message.activation.0": "Correo de activacion enviado",    
+    "child.message.activation.-1": "Error de comunicación, intenta más tarde",
+    "child.message.activation.-2": "La cuenta ya esta activa",    
 
     "notification.list.title": "Notificaciones",
     "notification.list.column1": "Creado por",
@@ -229,6 +235,7 @@
     "action.reset": "Restablecer",    
     "action.show": "Ver",
     "action.send": "Enviar",
+    "action.saveContinue": "Guardar y continuar",
 
     "footer.text": "Todos los derechos reservados 2021",
 

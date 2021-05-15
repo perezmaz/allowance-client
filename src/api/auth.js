@@ -4,16 +4,18 @@ import jwtDecode from 'jwt-decode';
 import axios from './server';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../config/localStorage';
 
-const willExpireToken = token => {
+export function getToken(tokenType) {
+  const token = localStorage.getItem(tokenType);
+
+  if (!token || token === 'null') {
+    return null;
+  }
+
   const metaToken = jwtDecode(token);
   const { expiredAt } = metaToken;
   const today = Moment().unix();
-  return today > expiredAt;
-};
-
-export function getToken(tokenType) {
-  const token = localStorage.getItem(tokenType);
-  if (!token || token === 'null' || willExpireToken(token)) {
+  const willExpireToken = today > expiredAt;
+  if (willExpireToken) {
     return null;
   }
   return token;

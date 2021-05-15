@@ -58,6 +58,11 @@ const ChatMessage = () => {
     })
   );
 
+  const scrollDown = () => {
+    const chatBox = document.getElementById('chatBox');
+    chatBox.scrollTo(0, chatBox.scrollHeight);
+  };
+
   useEffect(() => {
     list()
       .then(response => {
@@ -79,8 +84,7 @@ const ChatMessage = () => {
           timeLeft: t('date.seconds.ago', { seconds: '0' }),
         },
       ]);
-      const element = document.getElementById('message');
-      element.focus();
+      scrollDown();
     }
   }, [newMessage]);
 
@@ -98,7 +102,7 @@ const ChatMessage = () => {
   const sendMessage = async event => {
     event.preventDefault();
     await save({ message });
-    window.scrollTo(0, document.body.scrollHeight);
+    scrollDown();
     setMessage('');
     sendChatNotification();
   };
@@ -110,8 +114,8 @@ const ChatMessage = () => {
   };
 
   return (
-    <Card className="mt-4 min-500">
-      <Card.Body className="d-flex flex-column">
+    <Card className="mt-4">
+      <Card.Body className="d-flex flex-column scroll" id="chatBox">
         {messages.length > 0 && messages.map((messageRecord, index) => (
           <div
             key={`${messageRecord.from._id}-${index}`}

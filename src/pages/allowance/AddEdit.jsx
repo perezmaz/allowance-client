@@ -11,12 +11,16 @@ import PageTitle from '../../components/PageTitle';
 import AllowanceForm from '../../components/allowance/AllowanceForm';
 
 const AddEdit = props => {
-  const { location, match } = props;
+  const { location, match, history } = props;
   const { params } = match;
   const { pathname } = location;
   const { id = 0 } = params;
 
   const { t } = useTranslation();
+
+  const goBack = () => {
+    history.goBack();
+  };
 
   const pageTitle = {
     title: id === 0 ? t('allowance.form.title') : t('allowance.form.title.edit'),
@@ -48,7 +52,7 @@ const AddEdit = props => {
       </Row>
       <Row>
         <Col>
-          <AllowanceForm {...props} />
+          <AllowanceForm {...props} saveCallback={goBack} />
         </Col>
       </Row>
     </Container>

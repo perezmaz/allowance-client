@@ -25,7 +25,6 @@ const ChildList = props => {
         name: record.child.name,
         age: record.child.age,
         email: record.email,
-        username: record.username,
       }
     ))
   );
@@ -97,11 +96,6 @@ const ChildList = props => {
         title: t('child.list.column3'),
         style: '',
         value: 'email',
-      },
-      {
-        title: t('child.list.column4'),
-        style: '',
-        value: 'username',
       },
     ],
     actions: [
