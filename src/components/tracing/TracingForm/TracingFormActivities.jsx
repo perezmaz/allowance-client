@@ -6,6 +6,7 @@ import {
   Col,
   Table,
   Form,
+  Card,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import validate from '../../../validations';
@@ -54,7 +55,7 @@ const TracingFormActivities = props => {
             striped
             hover
             responsive
-            className="table mt-3"
+            className="table mt-3 d-none d-sm-block"
           >
             <thead>
               <tr>
@@ -125,6 +126,85 @@ const TracingFormActivities = props => {
                 </tbody>
               )}
           </Table>
+
+          {activities.map((record, index) => (
+            <Card className="mt-3 d-sm-none" border="info">
+              <Card.Header as="h5" className="text-primary bg-light">
+                {record.activity}
+              </Card.Header>
+              <Card.Body>
+                <Row>
+                  <Col className="d-flex flex-row">
+                    <div className="mr-3 text-secondary">
+                      <strong>
+                        {t('tracing.subform.list.column2')}
+                        :
+                      </strong>
+                    </div>
+                    <div>
+                      {record.percent}
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="d-flex flex-row">
+                    <div className="mr-3 text-secondary">
+                      <strong>
+                        {t('tracing.subform.list.column3')}
+                        :
+                      </strong>
+                    </div>
+                    <div>
+                      {record.amount}
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="d-flex flex-row">
+                    <div className="mr-3 text-secondary">
+                      <strong>
+                        {t('tracing.subform.list.column4')}
+                        :
+                      </strong>
+                    </div>
+                    <div className="w20">
+                      <Form.Control
+                        name={`percent${index}`}
+                        type="text"
+                        isInvalid={record.isInvalid}
+                        value={record.tracingPercent}
+                        onChange={e => tracingPercentChange(e, record._id)}
+                        disabled={isDisabled}
+                        size="sm"
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {record.validationMessage}
+                      </Form.Control.Feedback>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="d-flex flex-row">
+                    <div className="mr-3 text-secondary">
+                      <strong>
+                        {t('tracing.subform.list.column5')}
+                        :
+                      </strong>
+                    </div>
+                    <div>
+                      {record.realAmount}
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          ))}
+          {activities.length === 0
+            && (
+              <h6>
+                {t('no.records')}
+              </h6>
+            )}
         </Col>
       </Row>
     </>
