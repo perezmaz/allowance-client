@@ -29,7 +29,7 @@ const TracingFormNotes = props => {
           >
             <thead>
               <tr>
-                <th className="w15 text-center d-none d-sm-block">{t('note.list.column1')}</th>
+                <th className="w15 text-center">{t('note.list.column1')}</th>
                 <th>{t('note.list.column3')}</th>
               </tr>
             </thead>
@@ -39,7 +39,7 @@ const TracingFormNotes = props => {
                   <tbody>
                     {notes.map(record => (
                       <tr key={`note-row-${record._id}`}>
-                        <td className="text-center d-none d-sm-block">
+                        <td className="text-center">
                           {record.date}
                         </td>
                         <td>

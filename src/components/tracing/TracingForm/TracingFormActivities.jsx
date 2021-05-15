@@ -128,7 +128,7 @@ const TracingFormActivities = props => {
           </Table>
 
           {activities.map((record, index) => (
-            <Card className="mt-3 d-sm-none" border="info">
+            <Card className="mt-3 d-sm-none" border="info" key={`activity-card-${record._id}`}>
               <Card.Header as="h5" className="text-primary bg-light">
                 {record.activity}
               </Card.Header>
