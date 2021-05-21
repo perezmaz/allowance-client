@@ -1,5 +1,5 @@
 export default {
-  HOST: 'http://192.168.1.111',
+  HOST: 'https://allowance-server.herokuapp.com',
   PORT: 8000,
   VERSION: 'v1',
 };

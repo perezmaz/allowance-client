@@ -5,7 +5,7 @@ import { getToken } from './auth';
 import { ACCESS_TOKEN } from '../config/localStorage';
 
 const instance = axios.create({
-  baseURL: `${notificationApi.HOST}:${notificationApi.PORT}/api/${notificationApi.VERSION}`,
+  baseURL: `${notificationApi.HOST}/api/${notificationApi.VERSION}`,
   timeout: 60000,
 });
 

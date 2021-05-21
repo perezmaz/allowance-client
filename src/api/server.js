@@ -5,7 +5,7 @@ import { getToken } from './auth';
 import { ACCESS_TOKEN } from '../config/localStorage';
 
 const instance = axios.create({
-  baseURL: `${api.HOST}:${api.PORT}/api/${api.VERSION}`,
+  baseURL: `${api.HOST}/api/${api.VERSION}`,
   timeout: 60000,
 });
 
