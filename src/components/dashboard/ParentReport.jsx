@@ -227,7 +227,7 @@ const ChildReport = () => {
                         </th>
                       </tr>
                     </thead>
-                    {record.tracking.length > 0
+                    {record.tracking.length > 0 && record.tracking[0]._id !== undefined
                       && (
                         <tbody>
                           {record.tracking.map(row => (
@@ -254,7 +254,8 @@ const ChildReport = () => {
                           ))}
                         </tbody>
                       )}
-                    {!record.tracking.length === 0
+                    {((record.tracking.length > 0 && record.tracking[0]._id === undefined)
+                      || record.tracking.length === 0)
                       && (
                         <tbody>
                           <tr>

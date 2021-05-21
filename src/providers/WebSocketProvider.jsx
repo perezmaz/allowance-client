@@ -11,7 +11,7 @@ import { ACCESS_TOKEN } from '../config/localStorage';
 
 export const WebSocketContext = createContext();
 
-const socket = io(`${notificationApi.HOST}:${notificationApi.SOCKET_PORT}`,
+const socket = io(`${notificationApi.HOST}`,
   {
     transports: ['websocket'],
     upgrade: false,

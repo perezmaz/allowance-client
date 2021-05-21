@@ -48,7 +48,7 @@ const LoginForm = () => {
       if (tutorial === 'completed') {
         window.location.href = '/';
       } else {
-        window.location.href = '/tutorial';
+        window.location.href = '/#/tutorial';
       }
     }
   };
