@@ -6,7 +6,7 @@ import LoginFormHeader from './LoginFormHeader';
 import LoginFormFooter from './LoginFormFooter';
 import { login } from '../../../api/user';
 import useMessage from '../../../hooks/useMessage';
-import { ACCESS_TOKEN, REFRESH_TOKEN, TUTORIAL } from '../../../config/localStorage';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../../config/localStorage';
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -44,12 +44,7 @@ const LoginForm = () => {
     } else {
       localStorage.setItem(ACCESS_TOKEN, response.result.accessToken);
       localStorage.setItem(REFRESH_TOKEN, response.result.refreshToken);
-      const tutorial = localStorage.getItem(TUTORIAL);
-      if (tutorial === 'completed') {
-        window.location.href = '/';
-      } else {
-        window.location.href = '/#/tutorial';
-      }
+      window.location.href = '/';
     }
   };
 

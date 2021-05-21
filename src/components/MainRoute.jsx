@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { logout } from '../api/auth';
 
-const MainRoute = ({ isAuth, isPrivate, path, ...rest }) => {
+const MainRoute = ({ isTutorial, isAuth, isPrivate, path, ...rest }) => {
   if (!isAuth) {
     if (!isPrivate) {
       return <Route path={path} {...rest} />;
@@ -16,7 +16,10 @@ const MainRoute = ({ isAuth, isPrivate, path, ...rest }) => {
     return <Redirect to="/login" />;
   }
   if (isPrivate) {
-    return <Route path={path} {...rest} />;
+    if (!isTutorial || path === '/tutorial') {
+      return <Route path={path} {...rest} />;
+    }
+    return <Redirect to="/tutorial" />;
   }
   if (path === '/activate/:token') {
     logout();

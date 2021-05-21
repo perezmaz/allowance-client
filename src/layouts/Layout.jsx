@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   HashRouter,
   Switch,
@@ -20,6 +20,17 @@ import useWebSocket from '../hooks/useWebSocket';
 import { TUTORIAL } from '../config/localStorage';
 
 const Layout = () => {
+  const [tutorial, setTutorial] = useState('completed');
+
+  useEffect(() => {
+    const hasTutorial = localStorage.getItem(TUTORIAL);
+    if (hasTutorial !== 'completed') {
+      setTutorial(true);
+    } else {
+      setTutorial(false);
+    }
+  });
+
   const { notificationMessage } = useMessage();
   const { modal, handleClose } = useModal();
   const { notificationAlert } = useWebSocket();
@@ -34,17 +45,15 @@ const Layout = () => {
     return null;
   }
 
-  const tutorial = localStorage.getItem(TUTORIAL);
-
   const Header = () => {
-    if (user && (tutorial === 'completed' || user.role === 'child')) {
+    if (user && (!tutorial || user.role === 'child')) {
       return <PrivateHeader />;
     }
     return <PublicHeader />;
   };
 
   const Footer = () => {
-    if (user && (tutorial === 'completed' || user.role === 'child')) {
+    if (user && (!tutorial || user.role === 'child')) {
       return <PrivateFooter />;
     }
     return <PublicFooter />;
@@ -52,11 +61,11 @@ const Layout = () => {
 
   return (
     <HashRouter>
-      <div className={auth && (tutorial === 'completed' || user.role === 'child') ? baseMainStyle : `${baseMainStyle} background`}>
+      <div className={auth && (!tutorial || user.role === 'child') ? baseMainStyle : `${baseMainStyle} background`}>
         <Header />
-        <main className={auth && (tutorial === 'completed' || user.role === 'child') ? `${baseContentStyle} main-content` : baseContentStyle}>
+        <main className={auth && (!tutorial || user.role === 'child') ? `${baseContentStyle} main-content` : baseContentStyle}>
           <Switch>
-            {routes.filter(item => item.type !== 'divider').map(route => {
+            {routes.map(route => {
               if (!user || (user && route.roles.includes(user.role))) {
                 return (
                   <MainRoute
@@ -66,6 +75,7 @@ const Layout = () => {
                     component={route.component}
                     isPrivate={route.isPrivate}
                     isAuth={auth}
+                    isTutorial={tutorial}
                   />
                 );
               }
