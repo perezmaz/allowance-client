@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 import {
-  BrowserRouter,
+  HashRouter,
   Switch,
 } from 'react-router-dom';
 import MainRoute from '../components/MainRoute';
@@ -51,7 +51,7 @@ const Layout = () => {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className={auth && (tutorial === 'completed' || user.role === 'child') ? baseMainStyle : `${baseMainStyle} background`}>
         <Header />
         <main className={auth && (tutorial === 'completed' || user.role === 'child') ? `${baseContentStyle} main-content` : baseContentStyle}>
@@ -91,7 +91,7 @@ const Layout = () => {
         message={notificationAlert.message}
         user={notificationAlert.user}
       />
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
